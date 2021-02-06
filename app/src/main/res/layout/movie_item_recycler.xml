@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgView_poster"
+        android:layout_width="240dp"
+        android:layout_height="320dp"
+        android:layout_gravity="center"
+        tools:src="@drawable/poster" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtView_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        tools:text="70%" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtView_nameFilm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        tools:text="Чудо женщина" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtView_releaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        tools:text="дата выхода" />
+
+
+</LinearLayout>
