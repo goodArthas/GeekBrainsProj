@@ -19,6 +19,11 @@ class MainViewModel(private val repository: Repository = RepositoryImpl()) : Vie
     fun getLiveData() = liveData
     fun getLiveDataLoading() = liveDataLoading
 
+    companion object {
+        const val NAME_FILM = "film_name"
+        const val DESCRIBE_FILM = "film_describe"
+    }
+
     init {
         onCreate()
     }
@@ -43,11 +48,8 @@ class MainViewModel(private val repository: Repository = RepositoryImpl()) : Vie
                     liveData.postValue(AppState.Error(NullPointerException()))
                 }
             }
-
             liveDataLoading.postValue(AppState.Loading(false))
-
         }.start()
-
 
     }
 

@@ -3,4 +3,5 @@
     <string name="ok">OK</string>
     <string name="done">Done</string>
     <string name="data_not_loaded">Data was not loaded</string>
+    <string name="smth_go_wrong">Something go wrong</string>
 </resources>
