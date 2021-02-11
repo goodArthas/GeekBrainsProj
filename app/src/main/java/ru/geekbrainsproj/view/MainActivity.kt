@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import ru.geekbrainsproj.AppState
 import ru.geekbrainsproj.MovieRecyclerAdapter
 import ru.geekbrainsproj.R
@@ -17,7 +18,7 @@ import ru.geekbrainsproj.view_model.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: MovieRecyclerAdapter
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getLiveDataLoading().observe(this, Observer { showLoading(it.boolean) })
 
         initViewElements()
@@ -52,7 +52,9 @@ class MainActivity : AppCompatActivity() {
                     recyclerView.adapter = recyclerAdapter
                 }
                 is AppState.Error -> showError(it.error)
-                else -> showError(ArrayIndexOutOfBoundsException())
+                else -> {
+                    showError(ArrayIndexOutOfBoundsException())
+                }
             }
         })
 
@@ -67,12 +69,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showError(error: Throwable) {
-        if (error is NullPointerException) {
-            Toast.makeText(applicationContext, getString(R.string.data_not_loaded), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(applicationContext, getString(R.string.smth_go_wrong), Toast.LENGTH_SHORT).show()
+        recyclerView.createAndShow(R.string.smth_go_wrong)
+        when (error) {
+            is NullPointerException -> Toast.makeText(applicationContext, getString(R.string.data_not_loaded), Toast.LENGTH_SHORT).show()
+            else -> {
+                Toast.makeText(applicationContext, getString(R.string.smth_go_wrong), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
 
+    private fun View.createAndShow(resId: Int, length: Int = Snackbar.LENGTH_SHORT) {
+        Snackbar.make(this, getString(resId), length).show()
+    }
 }
