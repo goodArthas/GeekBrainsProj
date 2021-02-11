@@ -1,12 +1,16 @@
 package ru.geekbrainsproj
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrainsproj.model.MovieData
+import ru.geekbrainsproj.view.DetailMovieActivity
+import ru.geekbrainsproj.view_model.MainViewModel
 
 class MovieRecyclerAdapter(private val movieArray: ArrayList<MovieData> = ArrayList()) : RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>() {
 
@@ -27,13 +31,23 @@ class MovieRecyclerAdapter(private val movieArray: ArrayList<MovieData> = ArrayL
 
     }
 
-
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val posterImg = itemView.findViewById<AppCompatImageView>(R.id.imgView_poster)
         val ratingTxtView = itemView.findViewById<AppCompatTextView>(R.id.txtView_rating)
         val nameFilmTxtView = itemView.findViewById<AppCompatTextView>(R.id.txtView_nameFilm)
         val releaseDateTxtView = itemView.findViewById<AppCompatTextView>(R.id.txtView_releaseDate)
+
+        private val mainContainerCardView = itemView.findViewById<CardView>(R.id.mainContainerCardView)
+
+        init {
+            mainContainerCardView.setOnClickListener {
+                it.context.startActivity(Intent(it.context, DetailMovieActivity::class.java).apply {
+                    putExtra(MainViewModel.NAME_FILM, movieArray[adapterPosition].name)
+                    putExtra(MainViewModel.DESCRIBE_FILM, movieArray[adapterPosition].description)
+                })
+            }
+        }
 
     }
 

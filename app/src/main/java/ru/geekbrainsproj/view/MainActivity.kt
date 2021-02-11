@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         viewModel.getLiveDataLoading().observe(this, Observer { showLoading(it.boolean) })
 
         initViewElements()
@@ -45,9 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecycler() {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
-
         viewModel.getLiveData().observe(this, Observer {
-
             when (it) {
                 is AppState.Success -> {
                     Log.d("QWE", "AppState.Success: initRecycler" + it.movieArray.size)
@@ -55,9 +52,8 @@ class MainActivity : AppCompatActivity() {
                     recyclerView.adapter = recyclerAdapter
                 }
                 is AppState.Error -> showError(it.error)
-
+                else -> showError(ArrayIndexOutOfBoundsException())
             }
-
         })
 
     }
@@ -73,6 +69,8 @@ class MainActivity : AppCompatActivity() {
     private fun showError(error: Throwable) {
         if (error is NullPointerException) {
             Toast.makeText(applicationContext, getString(R.string.data_not_loaded), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(applicationContext, getString(R.string.smth_go_wrong), Toast.LENGTH_SHORT).show()
         }
     }
 
