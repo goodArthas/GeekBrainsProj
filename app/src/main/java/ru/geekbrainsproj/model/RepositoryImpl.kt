@@ -1,21 +1,18 @@
 package ru.geekbrainsproj.model
 
 import android.util.Log
+import ru.geekbrainsproj.model.pojo.MovieData
 
 class RepositoryImpl : Repository {
-    private fun getArrays(): ArrayList<MovieData> {
-        return ArrayList<MovieData>().apply {
-            for (i in 1..50) add(MovieData.getDefaultMovieData())
-        }
+
+
+    override fun getMoviesFromInternet(): MovieData {
+        return null!!
     }
 
-    override fun getMoviesFromInternet(): ArrayList<MovieData> {
-        return ArrayList<MovieData>()
-    }
-
-    override fun getMoviesFromLocalStorage(): ArrayList<MovieData> {
+    override fun getMoviesFromLocalStorage(): MovieData {
         Log.d("QWE", "getMoviesFromLocalStorage: ")
-        return getArrays()
+        return null!!
     }
 
 }

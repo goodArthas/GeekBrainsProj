@@ -8,20 +8,21 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import ru.geekbrainsproj.model.MovieData
+import com.bumptech.glide.Glide
+import ru.geekbrainsproj.model.pojo.MovieInfo
 import ru.geekbrainsproj.view.DetailMovieActivity
 import ru.geekbrainsproj.view_model.MainViewModel
 
-class MovieRecyclerAdapter(private val movieArray: ArrayList<MovieData> = ArrayList()) : RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>() {
+class MovieRecyclerAdapter(private val movieArray: List<MovieInfo>) : RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder = MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.movie_item_recycler, parent, false))
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.posterImg.setImageResource(R.drawable.poster)
-        holder.ratingTxtView.text = movieArray[position].rating
-        holder.nameFilmTxtView.text = movieArray[position].name
-        holder.releaseDateTxtView.text = movieArray[position].releaseDate
+        holder.ratingTxtView.text = movieArray[position].vote_count.toString()
+        holder.nameFilmTxtView.text = movieArray[position].title
+        holder.releaseDateTxtView.text = movieArray[position].release_date
     }
 
     override fun getItemCount(): Int {
@@ -43,10 +44,15 @@ class MovieRecyclerAdapter(private val movieArray: ArrayList<MovieData> = ArrayL
         init {
             mainContainerCardView.setOnClickListener {
                 it.context.startActivity(Intent(it.context, DetailMovieActivity::class.java).apply {
-                    putExtra(MainViewModel.NAME_FILM, movieArray[adapterPosition].name)
-                    putExtra(MainViewModel.DESCRIBE_FILM, movieArray[adapterPosition].description)
+                    putExtra(MainViewModel.NAME_FILM, movieArray[adapterPosition].title)
+                    putExtra(MainViewModel.DESCRIBE_FILM, movieArray[adapterPosition].overview)
                 })
             }
+            Glide.with(itemView.context)
+                    .load(movieArray[adapterPosition].poster_path)
+                    .centerCrop()
+                    .into(posterImg)
+
         }
 
     }

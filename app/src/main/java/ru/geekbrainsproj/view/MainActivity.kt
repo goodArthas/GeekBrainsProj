@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.getLiveData().observe(this, Observer {
             when (it) {
                 is AppState.Success -> {
-                    Log.d("QWE", "AppState.Success: initRecycler" + it.movieArray.size)
-                    recyclerAdapter = MovieRecyclerAdapter(it.movieArray)
+                    Log.d("QWE", "AppState.Success: initRecycler" + it.movieData.movieInfo.size)
+                    recyclerAdapter = MovieRecyclerAdapter(it.movieData.movieInfo)
                     recyclerView.adapter = recyclerAdapter
                 }
                 is AppState.Error -> showError(it.error)
