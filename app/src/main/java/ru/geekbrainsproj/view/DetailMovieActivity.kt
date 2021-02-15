@@ -1,6 +1,7 @@
 package ru.geekbrainsproj.view
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -20,6 +21,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
         findViews()
         fillViewsWithData()
+        nameFilmTxtView.showError(R.string.app_name)
     }
 
     private fun findViews() {
@@ -34,4 +36,7 @@ class DetailMovieActivity : AppCompatActivity() {
         describeFilmTxtView.text = getIntent.getStringExtra(MainViewModel.DESCRIBE_FILM)
     }
 
+    private fun TextView.showError(resId: Int) {
+        this.text = getString(resId)
+    }
 }
