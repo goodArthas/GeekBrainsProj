@@ -1,5 +1,7 @@
 package ru.geekbrainsproj.model.pojo
 
+import kotlinx.serialization.Serializable
+
 @Serializable
 data class MovieData(
         val page: Int,
