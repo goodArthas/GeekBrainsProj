@@ -1,12 +1,13 @@
 package ru.geekbrainsproj.view
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import com.squareup.picasso.Picasso
 import ru.geekbrainsproj.R
 import ru.geekbrainsproj.view_model.MainViewModel
+import ru.geekbrainsproj.view_model.MainViewModel.Companion.POSTER_FILM
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -21,7 +22,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
         findViews()
         fillViewsWithData()
-        nameFilmTxtView.showError(R.string.app_name)
     }
 
     private fun findViews() {
@@ -34,9 +34,12 @@ class DetailMovieActivity : AppCompatActivity() {
         val getIntent = intent
         nameFilmTxtView.text = getIntent.getStringExtra(MainViewModel.NAME_FILM)
         describeFilmTxtView.text = getIntent.getStringExtra(MainViewModel.DESCRIBE_FILM)
+
+        Picasso.with(this)
+                .load("https://image.tmdb.org/t/p/original${getIntent.getStringExtra(POSTER_FILM)}")
+                .resize(180, 280)
+                .centerCrop()
+                .into(posterImgView)
     }
 
-    private fun TextView.showError(resId: Int) {
-        this.text = getString(resId)
-    }
 }
