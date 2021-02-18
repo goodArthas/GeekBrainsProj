@@ -22,10 +22,11 @@ class MainViewModel(private val repository: Repository = RepositoryImpl()) : Vie
     companion object {
         const val NAME_FILM = "film_name"
         const val DESCRIBE_FILM = "film_describe"
+        const val POSTER_FILM = "film_poster"
     }
 
     init {
-        onCreate()
+        //onCreate()
     }
 
     private fun onCreate() {

@@ -24,7 +24,6 @@
         android:layout_width="240dp"
         android:layout_height="320dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/poster"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_filmName" />
 
