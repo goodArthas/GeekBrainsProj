@@ -21,10 +21,7 @@
         </activity>
         <activity android:name=".view.DetailMovieActivity" />
 
-        <service
-            android:name=".model.MyService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false" />
+
     </application>
 
 </manifest>

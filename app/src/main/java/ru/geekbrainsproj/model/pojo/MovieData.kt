@@ -2,11 +2,8 @@ package ru.geekbrainsproj.model.pojo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.Serializable
 
-// только с java.io.Serializable сработало
-@Serializable
-class MovieData : java.io.Serializable {
+class MovieData {
     @SerializedName("page")
     @Expose
     var page: Int? = null

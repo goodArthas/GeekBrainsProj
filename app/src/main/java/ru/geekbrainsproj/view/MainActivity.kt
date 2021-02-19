@@ -1,10 +1,5 @@
 package ru.geekbrainsproj.view
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,12 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.geekbrainsproj.AppState
 import ru.geekbrainsproj.MovieRecyclerAdapter
 import ru.geekbrainsproj.R
-import ru.geekbrainsproj.model.MOVIE_DATA
-import ru.geekbrainsproj.model.MyService
-import ru.geekbrainsproj.model.pojo.MovieData
 import ru.geekbrainsproj.view_model.MainViewModel
-
-const val ACTION_FILTER_MOVIE_BR = "ru.geekbrainsproj.view.getmovie"
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,43 +29,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.getLiveDataLoading().observe(this, Observer { showLoading(it.boolean) })
+        viewModel.liveDataLoading.observe(this, Observer { showLoading(it.boolean) })
 
         initViewElements()
         initRecycler()
 
-        MyService.run(this, Intent(this, MyService::class.java))
-        // startService(Intent(this, MyService::class.java))
-
-    }
-
-    private val broadcastInternetListener = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            Toast.makeText(applicationContext, "Изменения интернета", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private val broadcastMovieListener = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-
-            intent?.let {
-                (it.getSerializableExtra(MOVIE_DATA) as MovieData).movieInfo?.let { it1 -> recyclerAdapter.setData(it1) }
-            }
-
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        registerReceiver(broadcastInternetListener, IntentFilter(CONNECTIVITY_ACTION))
-        registerReceiver(broadcastMovieListener, IntentFilter(ACTION_FILTER_MOVIE_BR))
-    }
-
-    override fun onStop() {
-        unregisterReceiver(broadcastInternetListener)
-        unregisterReceiver(broadcastMovieListener)
-        stopService(Intent(this, MyService::class.java))
-        super.onStop()
     }
 
     private fun initViewElements() {
@@ -88,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         recyclerAdapter = MovieRecyclerAdapter(emptyList())
         recyclerView.adapter = recyclerAdapter
 
-        viewModel.getLiveData().observe(this, Observer {
+        viewModel.liveData.observe(this, Observer {
             when (it) {
                 is AppState.Success -> {
                     it.movieData.movieInfo?.let {
