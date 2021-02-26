@@ -24,7 +24,7 @@ class MovieRecyclerAdapter(private var movieArray: List<MovieInfo>) : RecyclerVi
         holder.releaseDateTxtView.text = movieArray[position].releaseDate
 
         Picasso.with(holder.nameFilmTxtView.context)
-                .load("https://image.tmdb.org/t/p/original${movieArray[position].posterPath}")
+                .load("https://image.tmdb.org/t/p/w500${movieArray[position].posterPath}")
                 .resize(180, 280)
                 .centerCrop()
                 .into(holder.posterImg)

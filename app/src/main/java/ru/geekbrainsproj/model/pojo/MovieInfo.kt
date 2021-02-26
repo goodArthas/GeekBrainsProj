@@ -2,10 +2,9 @@ package ru.geekbrainsproj.model.pojo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.Serializable
 
-@Serializable
-class MovieInfo : java.io.Serializable {
+
+class MovieInfo {
     @SerializedName("adult")
     @Expose
     var adult: Boolean? = null
