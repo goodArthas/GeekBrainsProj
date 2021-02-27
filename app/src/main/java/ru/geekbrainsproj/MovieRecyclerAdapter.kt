@@ -4,21 +4,39 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.geekbrainsproj.model.pojo.MovieInfo
+import ru.geekbrainsproj.view.ADULT_CONTENT_SHOWING
 import ru.geekbrainsproj.view.DetailMovieActivity
 import ru.geekbrainsproj.view_model.MainViewModel
 
-class MovieRecyclerAdapter(private var movieArray: List<MovieInfo>) : RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>() {
+class MovieRecyclerAdapter(private var movieArray: List<MovieInfo>, private var recyclerCallback: RecyclerCallback) : RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>() {
 
+    private var globalAdultPermission: Boolean = true
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder = MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.movie_item_recycler, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+
+        globalAdultPermission = PreferenceManager.getDefaultSharedPreferences(parent.context).getBoolean(ADULT_CONTENT_SHOWING, true)
+
+        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.movie_item_recycler, parent, false))
+    }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+        if (!globalAdultPermission)
+            movieArray[position].adult?.let {
+                if (it) {
+                    holder.posterImg.setImageResource(R.drawable.adult_img)
+                    return
+                }
+            }
+
         holder.ratingTxtView.text = movieArray[position].voteAverage.toString()
         holder.nameFilmTxtView.text = movieArray[position].title
         holder.releaseDateTxtView.text = movieArray[position].releaseDate
@@ -60,8 +78,18 @@ class MovieRecyclerAdapter(private var movieArray: List<MovieInfo>) : RecyclerVi
                     putExtra(MainViewModel.POSTER_FILM, movieArray[adapterPosition].posterPath)
                 })
             }
+
+            mainContainerCardView.setOnLongClickListener {
+                recyclerCallback.movieToWatchLater(movieArray[adapterPosition])
+                Toast.makeText(it.context, "Film was added to \"Watch Later\"", Toast.LENGTH_SHORT).show()
+                return@setOnLongClickListener true
+            }
         }
 
+    }
+
+    interface RecyclerCallback {
+        fun movieToWatchLater(movie: MovieInfo)
     }
 
 }

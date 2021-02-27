@@ -1,4 +1,4 @@
-package ru.geekbrainsproj.model.repositories
+package ru.geekbrainsproj.model.repositories.remote
 
 import com.google.gson.GsonBuilder
 import retrofit2.Callback
