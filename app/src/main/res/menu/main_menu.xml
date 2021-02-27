@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/adultShowState"
+        android:checkable="true"
+        android:title="@string/show_adult_content"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/watchLaterItem"
+        android:icon="@drawable/watch_later_img"
+        android:title="@string/watchLater"
+        app:showAsAction="ifRoom" />
+
+</menu>

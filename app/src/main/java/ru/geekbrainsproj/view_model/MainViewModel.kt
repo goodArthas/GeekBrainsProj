@@ -7,16 +7,25 @@ import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import ru.geekbrainsproj.App
 import ru.geekbrainsproj.AppState
 import ru.geekbrainsproj.model.pojo.MovieData
+import ru.geekbrainsproj.model.pojo.MovieInfo
 import ru.geekbrainsproj.model.repositories.MainRepository
 import ru.geekbrainsproj.model.repositories.RepositoryImpl
+import ru.geekbrainsproj.model.repositories.locale.LocalRepository
+import ru.geekbrainsproj.model.repositories.locale.LocalRepositoryImpl
+import ru.geekbrainsproj.model.room.WatchLaterFilmEntity
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val SERVER_ERROR = "Ошибка сервера"
 private const val REQUEST_ERROR = "Ошибка запроса на сервер"
 private const val CORRUPTED_DATA = "Неполные данные"
 
-class MainViewModel(private val mainRepository: MainRepository = RepositoryImpl()) : ViewModel(), LifecycleObserver {
+class MainViewModel(private val mainRepository: MainRepository = RepositoryImpl(),
+                    private val localRepository: LocalRepository = LocalRepositoryImpl(App.getWatchLaterDao())
+) : ViewModel(), LifecycleObserver {
 
     val liveData: MutableLiveData<AppState> = MutableLiveData()
     val liveDataLoading: MutableLiveData<AppState.Loading> = MutableLiveData()
@@ -71,6 +80,13 @@ class MainViewModel(private val mainRepository: MainRepository = RepositoryImpl(
         } else {
             AppState.Success(serverResponse)
         }
+    }
+
+    fun addFilmToWatchLater(movie: MovieInfo) {
+        Thread {
+            localRepository.saveFilmToDB(WatchLaterFilmEntity(0, movie.title
+                    ?: "Error", SimpleDateFormat("yyyy-MM-dd HH:mm").format(Date())))
+        }.start()
     }
 
 }

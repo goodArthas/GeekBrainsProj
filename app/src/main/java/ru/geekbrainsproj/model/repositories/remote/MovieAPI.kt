@@ -1,4 +1,4 @@
-package ru.geekbrainsproj.model.repositories
+package ru.geekbrainsproj.model.repositories.remote
 
 import retrofit2.Call
 import retrofit2.http.GET
