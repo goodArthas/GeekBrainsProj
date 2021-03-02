@@ -68,6 +68,10 @@ class MainActivity : AppCompatActivity(), MovieRecyclerAdapter.RecyclerCallback 
                 val intent = Intent(this, WatchLaterActivity::class.java)
                 startActivity(intent)
             }
+            R.id.phoneBook -> {
+                val intent = Intent(this, MyPhoneBookActivity::class.java)
+                startActivity(intent)
+            }
             else -> return true
         }
         return super.onOptionsItemSelected(item)

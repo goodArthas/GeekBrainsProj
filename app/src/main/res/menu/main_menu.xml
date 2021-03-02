@@ -13,5 +13,10 @@
         android:icon="@drawable/watch_later_img"
         android:title="@string/watchLater"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/phoneBook"
+        android:icon="@drawable/ic_menu_book"
+        android:title="@string/watchLater"
+        app:showAsAction="ifRoom" />
 
 </menu>
