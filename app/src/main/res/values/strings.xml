@@ -6,4 +6,6 @@
     <string name="smth_go_wrong">Something go wrong</string>
     <string name="show_adult_content">Show adult content</string>
     <string name="watchLater">Watch Later</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="artist_country">Страна актёра</string>
 </resources>
