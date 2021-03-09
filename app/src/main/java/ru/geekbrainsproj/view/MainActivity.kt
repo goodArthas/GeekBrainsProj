@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity(), MovieRecyclerAdapter.RecyclerCallback 
 
         initRecycler()
 
+
     }
+
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.getItem(0)?.isChecked = getAdultStateFromSharedPreferences()

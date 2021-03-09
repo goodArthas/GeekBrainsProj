@@ -41,11 +41,8 @@ class MainViewModel(private val mainRepository: MainRepository = RepositoryImpl(
                             } else {
                                 AppState.Error(Throwable(SERVER_ERROR))
                             }
-
                     )
-
                     liveDataLoading.postValue(AppState.Loading(false))
-
                 }
 
                 override fun onFailure(call: Call<MovieData>, t: Throwable) {
