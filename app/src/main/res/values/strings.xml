@@ -8,4 +8,5 @@
     <string name="watchLater">Watch Later</string>
     <string name="title_activity_maps">Map</string>
     <string name="artist_country">Страна актёра</string>
+    <string name="vip_user_function">Эта функция доступна только для премиум пользователей</string>
 </resources>

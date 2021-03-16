@@ -21,9 +21,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
     }
@@ -32,10 +32,34 @@ android {
         viewBinding true
     }
 
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+            def key = properties.getProperty("key")
+
+            storeFile file("keystore.jks")
+            storePassword key
+            keyAlias key
+            keyPassword key
+        }
+
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-release"
+
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-debug"
         }
     }
     compileOptions {
@@ -44,6 +68,18 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    flavorDimensions 'version'
+    productFlavors {
+        freeVersion {
+            dimension 'version'
+            versionNameSuffix '.free'
+        }
+        paidVersion {
+            dimension 'version'
+            versionNameSuffix '.paid'
+        }
     }
 }
 
